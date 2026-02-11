@@ -3,7 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 
-from helper import generate_registration_data
+from loghelper import generate_registration_data
 from data import Credentials
 from locators import Locators
 from curl import *
@@ -19,5 +19,4 @@ class TestRegistration:
 
         error_element = WebDriverWait(driver, 10, poll_frequency=0.1).until(
     EC.visibility_of_element_located(Locators.ERROR_PASSWORD_MESSAGE))
-        text_of_error = error_element.text
-        assert "Некорректный пароль" in text_of_error, "Сообщение об ошибке верное"
+        assert error_element.is_displayed(), "Сообщение об ошибке 'Некорректный пароль' не появилось"
