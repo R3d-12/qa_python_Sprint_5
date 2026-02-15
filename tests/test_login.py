@@ -6,59 +6,47 @@ from locators import Locators
 from curl import *
 from data import Credentials
 
-# вход по кнопкам "Войти" в аккаунт и ЛК
+
+def wait_visible(driver, locator, timeout=20):
+    WebDriverWait(driver, timeout, poll_frequency=0.1).until(
+        EC.visibility_of_element_located(locator)
+    )
+
+
 @pytest.mark.parametrize('log_button', [Locators.LOGIN_TO_ACCOUNT_BTN, Locators.ACCOUNT_LINK])
-def test_login_on_the_main_page(driver,log_button):
+def test_login_on_the_main_page(driver, log_button):
+    """Вход по кнопкам «Войти в аккаунт» или «Личный кабинет» на главной: переход на страницу входа, авторизация."""
     driver.find_element(*log_button).click()
-    try:
-        WebDriverWait(driver, 20, poll_frequency=0.1).until(EC.url_to_be(login_page))
-    except Exception:
-        pass
-    assert driver.current_url == login_page, "Не перешли на страницу входа"
+    wait_visible(driver, Locators.AUTHORIZATION_SUBMIT_BTN)
     driver.find_element(*Locators.EMAIL_INPUT_LOGIN).send_keys(*Credentials.email_user)
     driver.find_element(*Locators.PASSWORD_INPUT_LOGIN).send_keys(*Credentials.password_user)
     driver.find_element(*Locators.AUTHORIZATION_SUBMIT_BTN).click()
+    wait_visible(driver, Locators.LOGIN_TO_ACCOUNT_BTN)
+    order_btns = driver.find_elements(*Locators.ORDER_BTN)
+    assert any(btn.is_displayed() for btn in order_btns), "Ошибка, авторизация не прошла"
+    
 
-    try:
-        WebDriverWait(driver, 20, poll_frequency=0.1).until(EC.url_to_be(main_site))
-    except Exception:
-        pass
-    assert driver.current_url == main_site, "Ошибка, авторизация не прошла"
-
-# вход по кнопке в форме регистрации
 def test_login_from_registration_form(driver):
+    """Вход по ссылке «Войти» в форме регистрации: переход на страницу входа, авторизация."""
     driver.get(register_page)
     driver.find_element(*Locators.LOGIN_LINK_IN_FORM).click()
-    try:
-        WebDriverWait(driver, 20, poll_frequency=0.1).until(EC.url_to_be(login_page))
-    except Exception:
-        pass
-    assert driver.current_url == login_page, "Не перешли на страницу входа"
+    wait_visible(driver, Locators.AUTHORIZATION_SUBMIT_BTN)
     driver.find_element(*Locators.EMAIL_INPUT_LOGIN).send_keys(*Credentials.email_user)
     driver.find_element(*Locators.PASSWORD_INPUT_LOGIN).send_keys(*Credentials.password_user)
     driver.find_element(*Locators.AUTHORIZATION_SUBMIT_BTN).click()
+    wait_visible(driver, Locators.LOGIN_TO_ACCOUNT_BTN)
+    order_btns = driver.find_elements(*Locators.ORDER_BTN)
+    assert any(btn.is_displayed() for btn in order_btns), "Ошибка, авторизация не прошла"
 
-    try:
-        WebDriverWait(driver, 20, poll_frequency=0.1).until(EC.url_to_be(main_site))
-    except Exception:
-        pass
-    assert driver.current_url == main_site, "Ошибка, авторизация не прошла"
 
-# вход по кнопке в форме восстановления пароля
 def test_login_from_password_recovery_form(driver):
+    """Вход по ссылке «Войти» в форме восстановления пароля: переход на страницу входа, авторизация."""
     driver.get(password_recovery)
     driver.find_element(*Locators.RECOVERY_LOGIN_LINK).click()
-    try:
-        WebDriverWait(driver, 20, poll_frequency=0.1).until(EC.url_to_be(login_page))
-    except Exception:
-        pass
-    assert driver.current_url == login_page, "Не перешли на страницу входа"
+    wait_visible(driver, Locators.AUTHORIZATION_SUBMIT_BTN)
     driver.find_element(*Locators.EMAIL_INPUT_LOGIN).send_keys(*Credentials.email_user)
     driver.find_element(*Locators.PASSWORD_INPUT_LOGIN).send_keys(*Credentials.password_user)
     driver.find_element(*Locators.AUTHORIZATION_SUBMIT_BTN).click()
-
-    try:
-        WebDriverWait(driver, 20, poll_frequency=0.1).until(EC.url_to_be(main_site))
-    except Exception:
-        pass
-    assert driver.current_url == main_site, "Ошибка, авторизация не прошла"
+    wait_visible(driver, Locators.LOGIN_TO_ACCOUNT_BTN)
+    order_btns = driver.find_elements(*Locators.ORDER_BTN)
+    assert any(btn.is_displayed() for btn in order_btns), "Ошибка, авторизация не прошла"
