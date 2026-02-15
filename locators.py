@@ -35,3 +35,4 @@ class Locators:
     BUNS_TAB = (By.XPATH, "//span[text()='Булки']/..")  # Вкладка «Булки»
     SAUCES_TAB = (By.XPATH, "//span[text()='Соусы']/..")  # Вкладка «Соусы»
     FILLINGS_TAB = (By.XPATH, "//span[text()='Начинки']/..")  # Вкладка «Начинки»
+    ORDER_BTN = (By.XPATH, "//button[text()='Оформить заказ']") #кнопка "Оформить заказ"
