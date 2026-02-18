@@ -15,5 +15,6 @@ class TestRegistration:
         driver.find_element(*Locators.PASSWORD_INPUT_REG).send_keys(password)
         driver.find_element(*Locators.SUBMIT_REG_BUTTON).click()
 
-        WebDriverWait(driver, 20, poll_frequency=0.1).until(EC.url_to_be(login_page))
-        assert driver.current_url == login_page, "Ошибка, регистрация не получислась"
+        assert WebDriverWait(driver, 20, poll_frequency=0.1).until(
+            EC.url_to_be(login_page)
+        ), "Ошибка, регистрация не получилась"
