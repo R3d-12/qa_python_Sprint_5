@@ -21,10 +21,11 @@ def test_login_on_the_main_page(driver, log_button):
     driver.find_element(*Locators.EMAIL_INPUT_LOGIN).send_keys(*Credentials.email_user)
     driver.find_element(*Locators.PASSWORD_INPUT_LOGIN).send_keys(*Credentials.password_user)
     driver.find_element(*Locators.AUTHORIZATION_SUBMIT_BTN).click()
-    wait_visible(driver, Locators.LOGIN_TO_ACCOUNT_BTN)
-    order_btns = driver.find_elements(*Locators.ORDER_BTN)
-    assert any(btn.is_displayed() for btn in order_btns), "Ошибка, авторизация не прошла"
-    
+    wait_visible(driver, Locators.LOGO_LINK)
+    assert WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located(Locators.ORDER_BTN)
+    ).is_displayed(), "Ошибка, авторизация не прошла"
+
 
 def test_login_from_registration_form(driver):
     """Вход по ссылке «Войти» в форме регистрации: переход на страницу входа, авторизация."""
@@ -34,9 +35,10 @@ def test_login_from_registration_form(driver):
     driver.find_element(*Locators.EMAIL_INPUT_LOGIN).send_keys(*Credentials.email_user)
     driver.find_element(*Locators.PASSWORD_INPUT_LOGIN).send_keys(*Credentials.password_user)
     driver.find_element(*Locators.AUTHORIZATION_SUBMIT_BTN).click()
-    wait_visible(driver, Locators.LOGIN_TO_ACCOUNT_BTN)
-    order_btns = driver.find_elements(*Locators.ORDER_BTN)
-    assert any(btn.is_displayed() for btn in order_btns), "Ошибка, авторизация не прошла"
+    wait_visible(driver, Locators.LOGO_LINK)
+    assert WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located(Locators.ORDER_BTN)
+    ).is_displayed(), "Ошибка, авторизация не прошла"
 
 
 def test_login_from_password_recovery_form(driver):
@@ -47,6 +49,7 @@ def test_login_from_password_recovery_form(driver):
     driver.find_element(*Locators.EMAIL_INPUT_LOGIN).send_keys(*Credentials.email_user)
     driver.find_element(*Locators.PASSWORD_INPUT_LOGIN).send_keys(*Credentials.password_user)
     driver.find_element(*Locators.AUTHORIZATION_SUBMIT_BTN).click()
-    wait_visible(driver, Locators.LOGIN_TO_ACCOUNT_BTN)
-    order_btns = driver.find_elements(*Locators.ORDER_BTN)
-    assert any(btn.is_displayed() for btn in order_btns), "Ошибка, авторизация не прошла"
+    wait_visible(driver, Locators.LOGO_LINK)
+    assert WebDriverWait(driver, 3).until(
+        EC.visibility_of_element_located(Locators.ORDER_BTN)
+    ).is_displayed(), "Ошибка, авторизация не прошла"
