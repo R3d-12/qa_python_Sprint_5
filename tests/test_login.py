@@ -21,10 +21,10 @@ def test_login_on_the_main_page(driver, log_button):
     driver.find_element(*Locators.EMAIL_INPUT_LOGIN).send_keys(*Credentials.email_user)
     driver.find_element(*Locators.PASSWORD_INPUT_LOGIN).send_keys(*Credentials.password_user)
     driver.find_element(*Locators.AUTHORIZATION_SUBMIT_BTN).click()
-    wait_visible(driver, Locators.LOGO_LINK)
+    WebDriverWait(driver, 20, poll_frequency=0.1).until(EC.url_to_be(main_site))
     assert WebDriverWait(driver, 3).until(
         EC.visibility_of_element_located(Locators.ORDER_BTN)
-    ).is_displayed(), "Ошибка, авторизация не прошла"
+    ), "Ошибка, авторизация не прошла"
 
 
 def test_login_from_registration_form(driver):
@@ -35,10 +35,10 @@ def test_login_from_registration_form(driver):
     driver.find_element(*Locators.EMAIL_INPUT_LOGIN).send_keys(*Credentials.email_user)
     driver.find_element(*Locators.PASSWORD_INPUT_LOGIN).send_keys(*Credentials.password_user)
     driver.find_element(*Locators.AUTHORIZATION_SUBMIT_BTN).click()
-    wait_visible(driver, Locators.LOGO_LINK)
+    WebDriverWait(driver, 20, poll_frequency=0.1).until(EC.url_to_be(main_site))
     assert WebDriverWait(driver, 3).until(
         EC.visibility_of_element_located(Locators.ORDER_BTN)
-    ).is_displayed(), "Ошибка, авторизация не прошла"
+    ), "Ошибка, авторизация не прошла"
 
 
 def test_login_from_password_recovery_form(driver):
@@ -49,7 +49,7 @@ def test_login_from_password_recovery_form(driver):
     driver.find_element(*Locators.EMAIL_INPUT_LOGIN).send_keys(*Credentials.email_user)
     driver.find_element(*Locators.PASSWORD_INPUT_LOGIN).send_keys(*Credentials.password_user)
     driver.find_element(*Locators.AUTHORIZATION_SUBMIT_BTN).click()
-    wait_visible(driver, Locators.LOGO_LINK)
+    WebDriverWait(driver, 20, poll_frequency=0.1).until(EC.url_to_be(main_site))
     assert WebDriverWait(driver, 3).until(
         EC.visibility_of_element_located(Locators.ORDER_BTN)
-    ).is_displayed(), "Ошибка, авторизация не прошла"
+    ), "Ошибка, авторизация не прошла"
